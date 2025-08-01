@@ -46,6 +46,10 @@ public class ReseñaService {
         return reseñaRepository.save(reseña);
     }
 
+    public List<Reseña> obtenerTodas() {
+        return reseñaRepository.findAll();
+    }
+
     public List<Reseña> obtenerPorPelicula(Long peliculaId) {
         return reseñaRepository.findAll().stream()
                 .filter(r -> r.getPelicula().getId().equals(peliculaId))

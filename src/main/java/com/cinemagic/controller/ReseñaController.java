@@ -1,5 +1,6 @@
 package com.cinemagic.controller;
 
+import com.cinemagic.model.Pelicula;
 import com.cinemagic.model.Reseña;
 import com.cinemagic.service.ReseñaService;
 import jakarta.validation.Valid;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +36,12 @@ public class ReseñaController {
         return reseñaService.obtenerPorPelicula(peliculaId);
     }
 
-    // DTO interno
+    @GetMapping
+    public ResponseEntity<List<Reseña>> obtenerReseñas() {
+        List<Reseña> reseñas = reseñaService.obtenerTodas();
+        return ResponseEntity.ok(reseñas);
+    }
+
     public static class ReseñaRequest {
         @NotNull
         private Long usuarioId;
@@ -50,7 +57,6 @@ public class ReseñaController {
         @Size(max = 500)
         private String comentario;
 
-        // Getters y setters
         public Long getUsuarioId() { return usuarioId; }
         public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
 

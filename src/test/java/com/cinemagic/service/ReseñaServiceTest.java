@@ -87,7 +87,7 @@ public class ReseñaServiceTest {
     @Test
     void obtenerPorPelicula_devuelveLista() {
         Pelicula pelicula = new Pelicula();
-        pelicula.setId(1L); // 👈 CRUCIAL
+        pelicula.setId(1L);
 
         Reseña r1 = new Reseña();
         r1.setPelicula(pelicula);

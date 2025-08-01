@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Permitimos /auth para login, registro
+                        // Registro y login permitido para cualquier rol
                         .requestMatchers("/auth/**").permitAll()
 
                         // Lectura pública de películas, funciones, etc.
@@ -44,7 +44,8 @@ public class SecurityConfig {
                         // Resumen ventas solo ADMINISTRADOR
                         .requestMatchers("/api/resumen/**").hasRole("ADMINISTRADOR")
 
-                        // Boletos solo ESPECTADOR
+                        // Boletos solo ESPECTADOR(Lectura para ADMINISTRADOR)
+                        .requestMatchers(HttpMethod.GET, "/boletos/**").hasAnyRole("ESPECTADOR", "ADMINISTRADOR")
                         .requestMatchers("/boletos/**").hasRole("ESPECTADOR")
 
                         // Cualquier otra ruta requiere autenticación
