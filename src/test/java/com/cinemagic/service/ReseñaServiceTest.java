@@ -27,7 +27,7 @@ public class ReseñaServiceTest {
     }
 
     @Test
-    void crearReseña_exito() {
+    void crearReseña() {
         Usuario usuario = new Usuario();
         Pelicula pelicula = new Pelicula();
         Reseña reseñaGuardada = new Reseña();
@@ -44,7 +44,7 @@ public class ReseñaServiceTest {
     }
 
     @Test
-    void crearReseña_fallaPorDuplicado() {
+    void Duplicado() {
         Usuario usuario = new Usuario();
         Pelicula pelicula = new Pelicula();
 
@@ -60,7 +60,7 @@ public class ReseñaServiceTest {
     }
 
     @Test
-    void crearReseña_fallaPorUsuarioNoEncontrado() {
+    void UsuarioNoEncontrado() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
@@ -71,7 +71,7 @@ public class ReseñaServiceTest {
     }
 
     @Test
-    void crearReseña_fallaPorPeliculaNoEncontrada() {
+    void PeliculaNoEncontrada() {
         Usuario usuario = new Usuario();
 
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
@@ -85,7 +85,7 @@ public class ReseñaServiceTest {
     }
 
     @Test
-    void obtenerPorPelicula_devuelveLista() {
+    void obtenerPorPelicula() {
         Pelicula pelicula = new Pelicula();
         pelicula.setId(1L);
 

@@ -147,7 +147,7 @@ public class BoletoServiceTest {
     }
 
     @Test
-    void obtenerResumenVentas_deberiaRetornarResumenCorrecto() {
+    void obtenerResumenVentas() {
         var resumenMock = List.of(
                 new com.cinemagic.dto.ResumenVentaDTO("Película A", 10L, 1500.0),
                 new com.cinemagic.dto.ResumenVentaDTO("Película B", 5L, 750.0)

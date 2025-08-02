@@ -31,7 +31,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    void crearUsuario_deberiaGuardarUsuarioConPasswordHasheado() {
+    void crearUsuario() {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setNombre("Juan");
         dto.setCorreo("juan@mail.com");
@@ -53,7 +53,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    void obtenerTodos_deberiaRetornarListaUsuarios() {
+    void obtenerTodos() {
         when(usuarioRepository.findAll()).thenReturn(Arrays.asList(new Usuario(), new Usuario()));
 
         List<Usuario> usuarios = usuarioService.obtenerTodos();
@@ -62,7 +62,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    void obtenerPorCorreo_deberiaRetornarUsuarioSiExiste() {
+    void obtenerPorCorreo() {
         Usuario usuario = new Usuario();
         usuario.setCorreo("a@a.com");
 
@@ -75,7 +75,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    void eliminarUsuario_deberiaEliminarPorId() {
+    void eliminarPorId() {
         usuarioService.eliminarUsuario(7L);
         verify(usuarioRepository).deleteById(7L);
     }
