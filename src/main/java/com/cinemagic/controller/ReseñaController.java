@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Expone los endpoints y  permite operaciones a traves de peticiones HTTP
 @RestController
 @RequestMapping("/reseñas")
 public class ReseñaController {
@@ -21,6 +22,7 @@ public class ReseñaController {
     @Autowired
     private ReseñaService reseñaService;
 
+    //Peticion para crear una reseña(con validacion de datos)
     @PostMapping
     public Reseña crearReseña(@RequestBody @Valid ReseñaRequest request) {
         return reseñaService.crearReseña(
@@ -31,17 +33,20 @@ public class ReseñaController {
         );
     }
 
+    //Peticion para buscar por pelicula
     @GetMapping("/pelicula/{peliculaId}")
     public List<Reseña> obtenerPorPelicula(@PathVariable Long peliculaId) {
         return reseñaService.obtenerPorPelicula(peliculaId);
     }
 
+    //Peticion para obtener todas las reseñas
     @GetMapping
     public ResponseEntity<List<Reseña>> obtenerReseñas() {
         List<Reseña> reseñas = reseñaService.obtenerTodas();
         return ResponseEntity.ok(reseñas);
     }
 
+    //Clase para los requisitos de la reseña
     public static class ReseñaRequest {
         @NotNull
         private Long usuarioId;
@@ -57,6 +62,7 @@ public class ReseñaController {
         @Size(max = 500)
         private String comentario;
 
+        //Getters y setters
         public Long getUsuarioId() { return usuarioId; }
         public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
 

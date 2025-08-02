@@ -2,9 +2,10 @@ package com.cinemagic.repository;
 
 import com.cinemagic.model.Sala;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+//Repositoryo y consulta personalizada
 public interface SalaRepository extends JpaRepository<Sala, Long> {
+
+    //Evita duplicados de salas con el mismo nombre
     boolean existsByNombre(String nombre);
 }

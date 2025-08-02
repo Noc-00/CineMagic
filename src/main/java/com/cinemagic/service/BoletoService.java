@@ -11,6 +11,7 @@ import java.util.Optional;
 import com.cinemagic.dto.ResumenVentaDTO;
 import com.cinemagic.repository.BoletoRepository;
 
+//Manejo de logica
 @Service
 @Transactional
 public class BoletoService {
@@ -27,13 +28,9 @@ public class BoletoService {
     @Autowired
     AsientoRepository asientoRepository;
 
-    public BoletoService() {
-        this.boletoRepository = boletoRepository;
-        this.usuarioRepository = usuarioRepository;
-        this.funcionRepository = funcionRepository;
-        this.asientoRepository = asientoRepository;
-    }
-
+    //Metodo para comprar un boleto
+    //Verifica que usuario, funcion y asiento existan
+    //Comprueba disponibilidad del asiento y lo marca como ocupado
     public Boleto comprarBoleto(Long usuarioId, Long funcionId, Long asientoId, double precio) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -47,11 +44,10 @@ public class BoletoService {
         if (!asiento.isDisponible()) {
             throw new RuntimeException("El asiento ya está ocupado");
         }
-
-        // Marcar asiento como ocupado
         asiento.setDisponible(false);
         asientoRepository.save(asiento);
 
+        //Guarda el boleto
         Boleto boleto = Boleto.builder()
                 .usuario(usuario)
                 .funcion(funcion)
@@ -59,29 +55,37 @@ public class BoletoService {
                 .precio(precio)
                 .fechaCompra(LocalDateTime.now())
                 .build();
-
         return boletoRepository.save(boleto);
     }
 
+    //Obtener lista de todos los boletos
     public List<Boleto> obtenerTodos() {
         return (List<Boleto>) boletoRepository.findAll();
     }
 
+    //Busca por Id
     public Optional<Boleto> obtenerPorId(Long id) {
         return boletoRepository.findById(id);
     }
 
+    //Elimina por Id
     public void eliminar(Long id) {
         boletoRepository.deleteById(id);
     }
 
-    public BoletoService(BoletoRepository boletoRepository) {
-        this.boletoRepository = boletoRepository;
-    }
-
-    // Método para obtener resumen de ventas
+    //Metodo para obtener resumen de ventas
     public List<ResumenVentaDTO> obtenerResumenVentas() {
         return boletoRepository.obtenerResumenVentasPorPelicula();
     }
 
+    //Constructor de inyeccion de dependencias
+    public BoletoService(BoletoRepository boletoRepository) {
+        this.boletoRepository = boletoRepository;
+    }
+    public BoletoService() {
+        this.boletoRepository = boletoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.funcionRepository = funcionRepository;
+        this.asientoRepository = asientoRepository;
+    }
 }

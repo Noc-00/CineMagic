@@ -3,81 +3,38 @@ package com.cinemagic.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
+import lombok.*;
 
+//Incluye calificacion, comentario y fecha
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reseña {
+
+    //Identificador unico
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //Usuario que escribe la contraseña
     @ManyToOne(optional = false)
     private Usuario usuario;
 
+    //Pelicula a reseñar
     @ManyToOne(optional = false)
     private Pelicula pelicula;
 
+    //calificacion para la pelicula
     @NotNull
-    @Min(1)
-    @Max(5)
+    @Min(1)//minimo puntaje
+    @Max(5)//maximo puntaje
     private Integer calificacion;
 
-    @Size(max = 500)
+    //comentario de la reseña
+    @Size(max = 500)//no mas de 500 caracteres
     private String comentario;
 
+    //fecha de publicacion
     private LocalDateTime fecha;
-
-    public Reseña(long l, Pelicula pelicula, Usuario usuario, int i, String wow) {
-    }
-
-    public Reseña() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Pelicula getPelicula() {
-        return pelicula;
-    }
-
-    public void setPelicula(Pelicula pelicula) {
-        this.pelicula = pelicula;
-    }
-
-    public Integer getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(Integer calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }
 }
